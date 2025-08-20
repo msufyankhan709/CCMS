@@ -1,0 +1,227 @@
+<template>
+  <div class="login-page">
+    <v-container fluid class="fill-height">
+      <v-row no-gutters class="fill-height">
+        <!-- Left Section (Signup Form) -->
+        <v-col cols="12" md="6" class="d-flex align-center justify-center pa-6 bg-white">
+          <v-card flat class="pa-6" max-width="400" rounded="lg">
+            <h1 class="text-h4 font-weight-bold mb-4">Create Account</h1>
+            <p class="text-subtitle-1 text-medium-emphasis mb-6">
+              Sign up for your RoleAccess account.
+            </p>
+
+            <v-form ref="form" @submit.prevent="handleSignup">
+              <v-text-field
+                v-model="name"
+                label="Full Name"
+                variant="outlined"
+                dense
+                class="mb-4"
+                placeholder="John Doe"
+                :rules="[rules.required]"
+              />
+
+              <v-text-field
+                v-model="email"
+                label="Email"
+                type="email"
+                variant="outlined"
+                dense
+                class="mb-4"
+                placeholder="john.doe@example.com"
+                :rules="[rules.required, rules.email]"
+              />
+
+              <v-text-field
+                v-model="password"
+                label="Password"
+                type="password"
+                variant="outlined"
+                dense
+                class="mb-4"
+                placeholder="Create a secure password"
+                :rules="[rules.required, rules.password]"
+              />
+
+              <v-select
+                v-model="role"
+                label="Select Role"
+                :items="roles"
+                variant="outlined"
+                dense
+                class="mb-4"
+                :rules="[rules.required]"
+              />
+
+              <v-text-field
+                v-model="department"
+                label="Department"
+                variant="outlined"
+                dense
+                class="mb-4"
+                placeholder="e.g., Computer Science"
+                :rules="[rules.required]"
+              />
+
+              <v-alert
+                v-if="error"
+                type="error"
+                variant="tonal"
+                closable
+                class="mb-4"
+                @click:close="error = ''"
+              >
+                {{ error }}
+              </v-alert>
+
+              <v-btn
+                color="#4C6EF5"
+                block
+                class="mb-4"
+                type="submit"
+                :loading="loading"
+                rounded
+              >
+                Sign Up
+              </v-btn>
+
+              <div class="text-center">
+                <span class="text-caption text-medium-emphasis">Already have an account? </span>
+                <v-btn text color="primary" class="text-none text-caption" @click="goToLogin">
+                  Login
+                </v-btn>
+              </div>
+            </v-form>
+          </v-card>
+        </v-col>
+
+        <!-- Right Section -->
+        <v-col cols="12" md="6" class="d-flex align-center justify-center pa-6" style="background-color: #A31F3D; color: white;">
+          <div class="text-center">
+            <div class="mb-6" style="position: relative;">
+              <div class="hexagon-pattern"></div>
+            </div>
+            <h2 class="text-h5 font-weight-medium mb-4">RoleAccess</h2>
+            <p class="text-subtitle-1 text-opacity-75">
+              Your secure portal for streamlined access and role management.
+            </p>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/store/auth';
+
+const router = useRouter();
+const authStore = useAuthStore();
+const form = ref(null);
+
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const role = ref('');
+const department = ref('');
+const loading = ref(false);
+const error = ref('');
+
+const roles = [
+  { title: 'Student', value: 'student' },
+  { title: 'Technician', value: 'technician' },
+  { title: 'Admin', value: 'admin' }
+];
+
+const rules = {
+  required: v => !!v || 'This field is required',
+  email: v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+  password: v => v.length >= 6 || 'Password must be at least 6 characters'
+};
+
+async function handleSignup() {
+  error.value = '';
+  const { valid } = await form.value.validate();
+  if (!valid) return;
+
+  loading.value = true;
+  try {
+    const userData = {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+      role: role.value,
+      department: department.value
+    };
+
+    // If technician, add additional fields
+    if (role.value === 'technician') {
+      userData.specialization = department.value;
+      userData.status = 'Available';
+      userData.assignedTasks = 0;
+    }
+
+    // Register the user
+    const { success, error: registerError } = await authStore.register(userData);
+    
+    if (!success) {
+      error.value = registerError || 'Registration failed';
+      return;
+    }
+
+    // If registration successful, login
+    const loginSuccess = await authStore.login({
+      email: email.value,
+      password: password.value
+    });
+
+    if (loginSuccess) {
+      router.push('/dashboard');
+    } else {
+      error.value = 'Registration successful but login failed';
+    }
+  } catch (e) {
+    console.error('Signup failed:', e);
+    error.value = 'An error occurred during registration';
+  } finally {
+    loading.value = false;
+  }
+}
+
+function goToLogin() {
+  router.push('/login');
+}
+</script>
+
+<style scoped>
+.login-page {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.v-card {
+  border-radius: 8px;
+}
+
+.hexagon-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255, 255, 255, 0.1)"/></svg>') repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.v-btn {
+  text-transform: none;
+  height: 48px;
+}
+
+.v-text-field.v-text-field--outlined {
+  border-radius: 4px;
+}
+</style>
