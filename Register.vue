@@ -219,7 +219,7 @@ function goToLogin() {
 
 .login-banner {
   background-color: #6B21A8;
-  min-height: 100vh;
+  min-height: 96vh;
   display: flex;
   align-items: center;
   justify-content: center;
