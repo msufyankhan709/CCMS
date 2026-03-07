@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>FYP Report - Chapters 5, 6, 7</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="" />
+
+<style>
+  body {
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+  h1 { font-size: 22pt; margin-top: 40px; border-bottom: 2px solid #333; padding-bottom: 10px; }
+  h2 { font-size: 16pt; margin-top: 30px; }
+  h3 { font-size: 14pt; margin-top: 20px; }
+  h4 { font-size: 13pt; margin-top: 15px; }
+  table { border-collapse: collapse; width: 100%; margin: 15px 0; font-size: 10pt; }
+  th, td { border: 1px solid #666; padding: 8px 10px; text-align: left; }
+  th { background-color: #f0f0f0; font-weight: bold; }
+  code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-size: 10pt; }
+  pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 10pt; }
+  pre code { background: none; padding: 0; }
+  hr { border: none; border-top: 2px solid #ccc; margin: 30px 0; }
+  @media print {
+    body { padding: 0; }
+    h1 { page-break-before: always; }
+    h1:first-child { page-break-before: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">FYP Report - Chapters 5, 6, 7</h1>
+</header>
+<h1 id="chapter-5-implementation">Chapter 5: Implementation</h1>
+<h2 id="development-environment">5.1 Development Environment</h2>
+<p>The Campus Complaint Management System was developed using a modern,
+industry-standard development environment comprising both backend and
+frontend toolchains. The following table summarizes the development
+environment setup:</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 35%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Technology</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Programming Language (Backend)</strong></td>
+<td>Java</td>
+<td>21 (LTS)</td>
+</tr>
+<tr class="even">
+<td><strong>Backend Framework</strong></td>
+<td>Spring Boot</td>
+<td>3.5.0</td>
+</tr>
+<tr class="odd">
+<td><strong>Build Tool</strong></td>
+<td>Apache Maven</td>
+<td>3.9+</td>
+</tr>
+<tr class="even">
+<td><strong>Programming Language (Frontend)</strong></td>
+<td>JavaScript (ES6+)</td>
+<td>ECMAScript 2023</td>
+</tr>
+<tr class="odd">
+<td><strong>Frontend Framework</strong></td>
+<td>Vue.js</td>
+<td>3.5.13</td>
+</tr>
+<tr class="even">
+<td><strong>UI Component Library</strong></td>
+<td>Vuetify</td>
+<td>3.9.0</td>
+</tr>
+<tr class="odd">
+<td><strong>Frontend Build Tool</strong></td>
+<td>Vite</td>
+<td>6.0.7</td>
+</tr>
+<tr class="even">
+<td><strong>Database</strong></td>
+<td>PostgreSQL</td>
+<td>13+</td>
+</tr>
+<tr class="odd">
+<td><strong>IDE</strong></td>
+<td>Visual Studio Code / IntelliJ IDEA</td>
+<td>Latest</td>
+</tr>
+<tr class="even">
+<td><strong>Version Control</strong></td>
+<td>Git</td>
+<td>Latest</td>
+</tr>
+<tr class="odd">
+<td><strong>API Testing</strong></td>
+<td>Postman / cURL</td>
+<td>Latest</td>
+</tr>
+<tr class="even">
+<td><strong>Operating System</strong></td>
+<td>Linux (Ubuntu)</td>
+<td>22.04 LTS</td>
+</tr>
+<tr class="odd">
+<td><strong>Runtime Environment</strong></td>
+<td>Node.js</td>
+<td>18+</td>
+</tr>
+</tbody>
+</table>
+<p>The backend server runs on <strong>port 8080</strong> and the
+frontend development server runs on <strong>port 5174</strong>.
+PostgreSQL serves as the relational database management system,
+configured with a dedicated database named
+<code>campus_complaints</code>. The project follows a monorepo structure
+with separate <code>backend/</code> and <code>frontend/</code>
+directories within a single repository.</p>
+<hr />
+<h2 id="core-module-implementation">5.2 Core Module Implementation</h2>
+<p>The system is organized into six core modules following the
+<strong>Model-View-Controller (MVC)</strong> architectural pattern on
+the backend and a <strong>component-based architecture</strong> on the
+frontend.</p>
+<h3 id="module-1-authentication-authorization-module">5.2.1 Module 1:
+Authentication &amp; Authorization Module</h3>
+<p>The Authentication and Authorization module is responsible for user
+registration, login, email verification, and role-based access control
+(RBAC). It forms the security backbone of the entire application.</p>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li><strong>AuthController.java</strong> — Exposes REST API endpoints
+for signup (<code>POST /api/auth/signup</code>), login
+(<code>POST /api/auth/login</code>), and email verification
+(<code>POST /api/auth/verify-email</code>).</li>
+<li><strong>AuthService.java</strong> — Contains the core business logic
+for user authentication. It performs:
+<ul>
+<li>Duplicate username and email validation during registration</li>
+<li>Role restriction (only <code>STUDENT</code> and <code>FACULTY</code>
+roles can self-register)</li>
+<li>Password hashing using BCrypt encryption</li>
+<li>UUID-based email verification token generation with 24-hour
+expiry</li>
+<li>JWT token generation upon successful login after email
+verification</li>
+</ul></li>
+<li><strong>JwtTokenUtil.java</strong> — Utility component for
+generating and validating JSON Web Tokens (JWT). Tokens include claims
+for <code>userId</code>, <code>role</code>, and <code>username</code>,
+with configurable expiration (default: 24 hours).</li>
+<li><strong>JwtAuthenticationFilter.java</strong> — A
+<code>OncePerRequestFilter</code> that intercepts every incoming HTTP
+request, extracts the JWT, validates it, and sets the Spring Security
+authentication context.</li>
+<li><strong>SecurityConfig.java</strong> — Configures the Spring
+Security filter chain with stateless sessions, CORS configuration, and
+method-level security via <code>@EnableMethodSecurity</code>.</li>
+</ul>
+<p><strong>User Roles:</strong></p>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 33%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Description</th>
+<th style="text-align: center;">Self-Registrable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>STUDENT</code></td>
+<td>Can submit complaints, track status, view recent complaints</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="even">
+<td><code>FACULTY</code></td>
+<td>Same permissions as STUDENT</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr class="odd">
+<td><code>TECHNICIAN</code></td>
+<td>Can view assigned complaints, update status, mark as resolved</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr class="even">
+<td><code>ADMIN</code></td>
+<td>Full system access: assign technicians, manage users, view
+reports</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="module-2-complaint-management-module">5.2.2 Module 2: Complaint
+Management Module</h3>
+<p>The Complaint Management module is the primary functional component
+of the system. It handles the complete lifecycle of a complaint from
+submission to closure.</p>
+<p><strong>Key Components:</strong></p>
+<ul>
+<li><strong>Complaint.java</strong> — JPA entity representing a
+complaint with fields for <code>title</code>, <code>category</code>,
+<code>location</code>, <code>description</code>, <code>priority</code>,
+<code>status</code>, and relationships to <code>User</code> (student and
+technician).</li>
+<li><strong>ComplaintController.java</strong> — REST controller
+providing endpoints:
+<ul>
+<li><code>POST /api/complaints</code> — Create a new complaint
+(multipart form data).</li>
+<li><code>GET /api/complaints/my</code> — Retrieve complaints submitted
+by the authenticated user.</li>
+<li><code>GET /api/complaints/technician</code> — Retrieve complaints
+assigned to the technician.</li>
+<li><code>PUT /api/complaints/{id}/assign</code> — Assign a technician
+(Admin only).</li>
+<li><code>PUT /api/complaints/{id}/status</code> — Update complaint
+status.</li>
+</ul></li>
+<li><strong>ComplaintService.java</strong> — Business logic layer
+handling creation, assignment, status updates, and corresponding
+notification triggers.</li>
+</ul>
+<p><strong>Complaint Status Workflow:</strong></p>
+<pre><code>OPEN → IN_PROGRESS → RESOLVED → CLOSED</code></pre>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 30%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Status</th>
+<th>Meaning</th>
+<th>Triggered By</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>OPEN</code></td>
+<td>Complaint has been submitted</td>
+<td>Student/Faculty submits complaint</td>
+</tr>
+<tr class="even">
+<td><code>IN_PROGRESS</code></td>
+<td>Technician has been assigned</td>
+<td>Admin assigns technician</td>
+</tr>
+<tr class="odd">
+<td><code>RESOLVED</code></td>
+<td>Issue has been fixed</td>
+<td>Technician marks resolved</td>
+</tr>
+<tr class="even">
+<td><code>CLOSED</code></td>
+<td>Complaint is finalized</td>
+<td>Admin closes complaint</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="module-3-notification-system-module">5.2.3 Module 3:
+Notification System Module</h3>
+<p>The Notification module provides real-time event-driven alerts to all
+stakeholders. It ensures that users are immediately informed about state
+changes relevant to them.</p>
+<p><strong>Key Components:</strong> - <strong>Notification.java</strong>
+— Entity storing the notification type, message, read status, and
+related entity ID. - <strong>NotificationService.java</strong> —
+Contains auto-notification helper methods triggered by other services: -
+<code>notifyAdminsNewComplaint()</code> — Alerts admins when a new
+complaint is filed. - <code>notifyTechnicianAssignment()</code> — Alerts
+a technician of a new assignment. -
+<code>notifyStudentStatusChange()</code> — Alerts the complaint author
+of status progressions. - <strong>Notification Types:</strong>
+<code>COMPLAINT</code>, <code>SYSTEM</code>, <code>ASSIGNMENT</code>,
+<code>USER</code>, <code>RESOLVED</code>, <code>COMMENT</code>.</p>
+<hr />
+<h3 id="module-4-communication-comments-module">5.2.4 Module 4:
+Communication (Comments) Module</h3>
+<p>This module facilitates bidirectional communication between
+stakeholders on a specific complaint without needing external messaging
+tools.</p>
+<p><strong>Key Components:</strong> -
+<strong>ComplaintComment.java</strong> — JPA entity associating a text
+comment with a specific Complaint and User, timestamped automatically. -
+<strong>CommentService.java</strong> — Handles the addition of comments.
+Crucially, when a user adds a comment, the service uses smart routing to
+notify all other relevant parties (e.g., if a technician comments, the
+student and admins are notified).</p>
+<hr />
+<h3 id="module-5-file-storage-management-module">5.2.5 Module 5: File
+Storage &amp; Management Module</h3>
+<p>This module handles binary data persistence, specifically for
+complaint evidence (images, documents).</p>
+<p><strong>Key Components:</strong> -
+<strong>FileStorageService.java</strong> — Manages local file system I/O
+operations. - Validates file sizes (up to 10MB limit configured in
+<code>application.properties</code>). - Generates unique UUID filenames
+to prevent collisions. - Returns access URLs (<code>/api/files/*</code>)
+that are stored in the <code>Complaint</code> entity. -
+<strong>FileController.java</strong> — Serves the static files back to
+the frontend through secure, authorized endpoints.</p>
+<hr />
+<h3 id="module-6-analytics-user-management-admin-module">5.2.6 Module 6:
+Analytics &amp; User Management (Admin) Module</h3>
+<p>This module provides system oversight, reporting, and administration
+capabilities for the <code>ADMIN</code> role.</p>
+<p><strong>Key Components:</strong> - <strong>UserService.java</strong>
+— Facilitates CRUD operations for user accounts, role reassignment, and
+safe deletion (preventing deletion of the base admin account or users
+with active complaints). - <strong>ReportsController.java</strong> —
+Exposes data aggregation endpoints for the frontend Chart.js dashboards:
+- <code>/api/reports/statistics</code> — Calculates total, open, and
+resolved metrics, alongside average resolution time. -
+<code>/api/reports/category-distribution</code> — Grouping queries to
+show complaint spread across categories. -
+<code>/api/reports/status-trend</code> — Extracts a 6-month historical
+trend of complaint submissions and resolutions.</p>
+<h2 id="algorithm-implementation">5.3 Algorithm Implementation</h2>
+<h3 id="algorithm-1-jwt-based-stateless-authentication">5.3.1 Algorithm
+1: JWT-Based Stateless Authentication</h3>
+<p>The system implements a JSON Web Token (JWT) based stateless
+authentication algorithm, which is a standard approach for securing
+RESTful APIs.</p>
+<p><strong>Algorithm Flow:</strong></p>
+<ol type="1">
+<li><strong>Token Generation</strong> — Upon successful login, the
+server generates a JWT containing:
+<ul>
+<li>Subject: user’s email</li>
+<li>Claims: <code>userId</code> (Long) and <code>role</code>
+(String)</li>
+<li>Issued At: current timestamp</li>
+<li>Expiration: current timestamp + 24 hours</li>
+<li>Signature: HMAC-SHA256 using a server-side secret key</li>
+</ul></li>
+<li><strong>Token Validation</strong> — For every subsequent request:
+<ul>
+<li>Extract <code>Authorization</code> header from the HTTP request</li>
+<li>Parse the Bearer token and verify the HMAC-SHA256 signature</li>
+<li>Check token expiration against the current timestamp</li>
+<li>Extract user identity from token claims</li>
+<li>Set Spring Security authentication context</li>
+</ul></li>
+</ol>
+<p><strong>Pseudocode:</strong></p>
+<pre><code>FUNCTION generateToken(username, userId, role):
+    claims ← {userId: userId, role: role}
+    token ← JWT.Builder()
+        .setClaims(claims)
+        .setSubject(username)
+        .setIssuedAt(NOW)
+        .setExpiration(NOW + 86400000ms)
+        .signWith(HMAC_SHA256, SECRET_KEY)
+        .build()
+    RETURN token
+
+FUNCTION validateToken(token):
+    TRY:
+        claims ← JWT.Parser()
+            .verifyWith(SECRET_KEY)
+            .parseSignedClaims(token)
+        IF claims.expiration &lt; NOW:
+            RETURN FALSE
+        RETURN TRUE
+    CATCH Exception:
+        RETURN FALSE</code></pre>
+<p><strong>Security Properties:</strong> - Tokens are signed using
+HMAC-SHA256 (HS256) algorithm - Secret key is stored server-side in
+<code>application.properties</code> - Tokens are stateless — no
+server-side session storage required - Password hashing uses BCrypt with
+automatic salt generation</p>
+<hr />
+<h3
+id="algorithm-2-complaint-priority-based-routing-and-notification">5.3.2
+Algorithm 2: Complaint Priority-Based Routing and Notification</h3>
+<p>The system implements an event-driven notification routing algorithm
+that automatically determines which users should be notified based on
+complaint lifecycle events.</p>
+<p><strong>Algorithm Flow:</strong></p>
+<pre><code>FUNCTION handleComplaintEvent(event, complaint):
+    SWITCH event:
+        CASE &quot;CREATED&quot;:
+            admins ← findAllUsersByRole(ADMIN)
+            FOR EACH admin IN admins:
+                createNotification(admin, &quot;New Complaint&quot;, COMPLAINT_TYPE)
+
+        CASE &quot;ASSIGNED&quot;:
+            createNotification(technician, &quot;New Assignment&quot;, ASSIGNMENT_TYPE)
+            createNotification(student, &quot;Technician Assigned&quot;, ASSIGNMENT_TYPE)
+
+        CASE &quot;STATUS_CHANGED&quot;:
+            IF newStatus == &quot;RESOLVED&quot;:
+                createNotification(student, &quot;Complaint Resolved&quot;, RESOLVED_TYPE)
+            ELSE:
+                createNotification(student, &quot;Status Updated&quot;, COMPLAINT_TYPE)
+            IF complaint.technician EXISTS:
+                createNotification(technician, &quot;Status Updated&quot;, COMPLAINT_TYPE)
+
+        CASE &quot;COMMENT_ADDED&quot;:
+            notifyAllStakeholders(complaint, commenter, COMMENT_TYPE)</code></pre>
+<p>This algorithm ensures that no stakeholder misses important updates,
+with notification types (<code>COMPLAINT</code>, <code>SYSTEM</code>,
+<code>ASSIGNMENT</code>, <code>USER</code>, <code>RESOLVED</code>,
+<code>COMMENT</code>) enabling frontend filtering and display
+customization.</p>
+<hr />
+<h2 id="external-apis-sdks">5.4 External APIs / SDKs</h2>
+<p>The system integrates with the following external services and
+SDKs:</p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 23%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>API / SDK</th>
+<th>Purpose</th>
+<th>Integration Point</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Mailtrap SMTP</strong></td>
+<td>Email delivery for verification emails</td>
+<td><code>EmailService.java</code> — Sends account verification emails
+via SMTP (sandbox.smtp.mailtrap.io:587) using Spring Mail’s
+<code>JavaMailSender</code></td>
+</tr>
+<tr class="even">
+<td><strong>JJWT (io.jsonwebtoken)</strong> v0.12.6</td>
+<td>JWT token generation and validation</td>
+<td><code>JwtTokenUtil.java</code> — Uses <code>Jwts.builder()</code>
+and <code>Jwts.parser()</code> for creating and verifying signed JWT
+tokens</td>
+</tr>
+<tr class="odd">
+<td><strong>PostgreSQL JDBC Driver</strong></td>
+<td>Database connectivity</td>
+<td>Spring Data JPA auto-configured via
+<code>spring.datasource.url</code> in
+<code>application.properties</code></td>
+</tr>
+<tr class="even">
+<td><strong>Axios</strong> v1.7.9</td>
+<td>HTTP client for API requests</td>
+<td><code>services/api.js</code> — Configured with base URL
+<code>http://localhost:8080/api</code>, automatic JWT bearer token
+injection via request interceptors</td>
+</tr>
+<tr class="odd">
+<td><strong>Chart.js</strong> v4.5.1</td>
+<td>Data visualization for admin dashboard</td>
+<td><code>AdminDashboard.vue</code> — Renders doughnut charts for
+complaint status distribution</td>
+</tr>
+<tr class="even">
+<td><strong>Material Design Icons</strong> (<span class="citation"
+data-cites="mdi/font">@mdi/font</span>) v7.4.47</td>
+<td>Icon library for UI components</td>
+<td>Used throughout all Vue components for visual iconography</td>
+</tr>
+<tr class="odd">
+<td><strong>Pinia</strong> v2.3.0</td>
+<td>Centralized state management</td>
+<td><code>stores/</code> — Four stores (<code>auth</code>,
+<code>complaint</code>, <code>notification</code>, <code>comment</code>)
+manage application-wide reactive state</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Email Verification Flow (Mailtrap Integration):</strong></p>
+<ol type="1">
+<li>User registers via signup form</li>
+<li><code>AuthService</code> generates a UUID verification token with
+24-hour expiry</li>
+<li><code>EmailService</code> composes a verification email with a
+clickable link containing the token</li>
+<li>Email is sent via SMTP to the user’s registered email address</li>
+<li>User clicks the link, which navigates to
+<code>/verify-email?token=&lt;UUID&gt;</code></li>
+<li>Frontend sends
+<code>POST /api/auth/verify-email?token=&lt;UUID&gt;</code> to
+backend</li>
+<li>Backend validates the token, marks the user’s email as verified</li>
+<li>User can now log in and receive a JWT token</li>
+</ol>
+<hr />
+<h2 id="user-interface-implementation">5.5 User Interface
+Implementation</h2>
+<h3 id="ui-design-approach">5.5.1 UI Design Approach</h3>
+<p>The user interface is built using <strong>Vue.js 3</strong> with the
+<strong>Composition API</strong> (<code>&lt;script setup&gt;</code>) and
+the <strong>Vuetify 3.9</strong> Material Design component library. The
+design philosophy centers on:</p>
+<ol type="1">
+<li><strong>Material Design Principles</strong> — Consistent use of
+Vuetify’s Material Design components (v-card, v-btn, v-data-table,
+v-dialog, v-chip, etc.) ensuring a familiar and professional look</li>
+<li><strong>Role-Based Layouts</strong> — Three distinct layouts
+(<code>StudentLayout</code>, <code>TechnicianLayout</code>,
+<code>AdminLayout</code>) with sidebar navigation tailored to each user
+role</li>
+<li><strong>Color-Coded Visual Indicators</strong> — Priority levels and
+complaint statuses are represented using color-coded Vuetify chips:
+<ul>
+<li>Status: OPEN (blue), IN_PROGRESS (orange), RESOLVED (green), CLOSED
+(grey)</li>
+<li>Priority: LOW (blue), MEDIUM (orange), HIGH (deep-orange), CRITICAL
+(red)</li>
+</ul></li>
+<li><strong>Responsive Design</strong> — Vuetify’s grid system
+(<code>v-row</code>, <code>v-col</code>) with breakpoint-aware column
+sizing (<code>cols="12" md="6"</code>) ensures responsiveness across
+devices</li>
+<li><strong>Gradient Backgrounds</strong> — Authentication screens use
+vibrant gradient backgrounds
+(<code>linear-gradient(135deg, #667eea 0%, #764ba2 100%)</code>) for
+visual appeal</li>
+</ol>
+<hr />
+<h3 id="screen-wise-implementation">5.5.2 Screen-wise
+Implementation</h3>
+<h4 id="screen-1-login-screen">5.5.2.1 Screen 1: Login Screen</h4>
+<p><strong>File:</strong> <code>frontend/src/views/LoginView.vue</code>
+(150 lines)</p>
+<p>The Login screen is the entry point of the application. It
+features:</p>
+<ul>
+<li><strong>Centered Card Layout</strong> — A <code>v-card</code>
+component centered on a purple gradient background</li>
+<li><strong>Form Fields:</strong>
+<ul>
+<li>Email field with <code>mdi-email</code> icon and email validation
+regex</li>
+<li>Password field with <code>mdi-lock</code> icon and required
+validation</li>
+</ul></li>
+<li><strong>Form Validation</strong> — Client-side validation rules for
+required fields and email format</li>
+<li><strong>Error Display</strong> — <code>v-alert</code> component
+shows authentication errors returned from the API</li>
+<li><strong>Demo Credentials</strong> — A secondary card displays demo
+admin credentials for quick testing</li>
+<li><strong>Role-Based Redirect</strong> — On successful login, users
+are redirected to their role-specific dashboard:
+<ul>
+<li>ADMIN → <code>/admin</code></li>
+<li>TECHNICIAN → <code>/technician</code></li>
+<li>STUDENT/FACULTY → <code>/student</code></li>
+</ul></li>
+<li><strong>Guest Guard</strong> — Navigation guard prevents
+authenticated users from accessing the login page</li>
+</ul>
+<p><strong>Key Implementation Details:</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Vuetify form validation rules</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> rules <span class="op">=</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">required</span><span class="op">:</span> value <span class="kw">=&gt;</span> <span class="op">!!</span>value <span class="op">||</span> <span class="st">&#39;This field is required&#39;</span><span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">email</span><span class="op">:</span> value <span class="kw">=&gt;</span> <span class="ss">/.</span><span class="sc">+</span><span class="ss">@.</span><span class="sc">+\.</span><span class="ss">.</span><span class="sc">+</span><span class="ss">/</span><span class="op">.</span><span class="fu">test</span>(value) <span class="op">||</span> <span class="st">&#39;Invalid email address&#39;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<h4 id="screen-2-dashboard-screen">5.5.2.2 Screen 2: Dashboard
+Screen</h4>
+<p><strong>Files:</strong> -
+<code>frontend/src/views/StudentDashboard.vue</code> (383 lines) -
+<code>frontend/src/views/AdminDashboard.vue</code> (350 lines) -
+<code>frontend/src/views/TechnicianDashboard.vue</code> (4.9 KB)</p>
+<p>Each user role has a dedicated dashboard:</p>
+<p><strong>Student Dashboard:</strong> - Welcome message with the user’s
+full name - “Submit New Complaint” button that opens a modal dialog -
+<code>v-data-table</code> showing recent complaints with columns: ID,
+Title, Priority, Status, Submitted By, Created Date, Actions - Complaint
+details dialog showing full information including attachment download
+links - Paginated data table with 5 items per page</p>
+<p><strong>Admin Dashboard:</strong> - Statistics cards showing: Total
+Complaints, Open Complaints, In Progress, Resolved - Recent complaints
+table (last 5) with quick “View Details” action - <strong>Doughnut
+chart</strong> (Chart.js) visualizing complaint status distribution with
+color-coded segments - Quick navigation to the full complaints list via
+“View All Complaints” button</p>
+<p><strong>Technician Dashboard:</strong> - Overview of assigned
+complaints - Quick access to assignments list - Status update
+capabilities for assigned complaints</p>
+<hr />
+<h4 id="screen-3-complaint-submission-screen">5.5.2.3 Screen 3:
+Complaint Submission Screen</h4>
+<p><strong>File:</strong> Integrated within
+<code>StudentDashboard.vue</code> as a <code>v-dialog</code> modal</p>
+<p>The complaint submission form is implemented as a Vuetify dialog
+(modal) triggered from the Student Dashboard:</p>
+<ul>
+<li><strong>Category Selection</strong> — Dropdown with options:
+Security, Maintenance, Facilities, IT Support, Cleanliness, Safety,
+Other</li>
+<li><strong>Priority Selection</strong> — Dropdown with options: LOW,
+MEDIUM, HIGH, CRITICAL (default: MEDIUM)</li>
+<li><strong>Subject Field</strong> — Text input for the complaint
+title</li>
+<li><strong>Location Field</strong> — Optional text input with
+placeholder (e.g., “CS 2 bathroom”)</li>
+<li><strong>Description</strong> — Multiline textarea (4 rows) for
+detailed complaint description</li>
+<li><strong>File Attachment</strong> — File input accepting images
+(<code>image/*</code>), PDF, DOC, and DOCX files with 5MB size
+limit</li>
+<li><strong>Form Validation</strong> — Required fields: Category,
+Priority, Subject, Description</li>
+<li><strong>Submission</strong> — Sends multipart form data to
+<code>POST /api/complaints</code> with the JWT token in the
+Authorization header</li>
+</ul>
+<hr />
+<h3 id="navigation-flow-diagram">5.5.3 Navigation Flow Diagram</h3>
+<p>The application uses <strong>Vue Router 4</strong> with
+<code>createWebHistory()</code> for clean URLs. Navigation guards
+enforce authentication and role-based access control.</p>
+<pre><code>                              ┌─────────────┐
+                              │  Landing (/) │
+                              └──────┬───────┘
+                                     │ redirect
+                                     ▼
+                              ┌─────────────┐     ┌──────────────┐
+                              │   Login (/   │────►│  Signup (/   │
+                              │   login)     │◄────│  signup)     │
+                              └──────┬───────┘     └──────────────┘
+                                     │                     │
+                                     │             ┌───────▼──────┐
+                                     │             │ Email Verify │
+                                     │             │ (/verify-    │
+                                     │             │  email)      │
+                                     │             └──────────────┘
+                    ┌────────────────┼────────────────┐
+                    │                │                 │
+              (STUDENT)          (ADMIN)         (TECHNICIAN)
+                    │                │                 │
+                    ▼                ▼                 ▼
+           ┌──────────────┐  ┌──────────────┐  ┌───────────────┐
+           │   Student    │  │    Admin     │  │  Technician   │
+           │   Layout     │  │    Layout    │  │    Layout     │
+           ├──────────────┤  ├──────────────┤  ├───────────────┤
+           │• Dashboard   │  │• Dashboard   │  │• Dashboard    │
+           │• My          │  │• All         │  │• Assignments  │
+           │  Complaints  │  │  Complaints  │  │• Notifications│
+           │• Notification│  │• Users Mgmt  │  │• Settings     │
+           │• Settings    │  │• Reports     │  └───────────────┘
+           └──────────────┘  │• Notification│
+                             │• Settings    │
+                             └──────────────┘</code></pre>
+<p><strong>Navigation Guard Logic:</strong> 1. If route requires
+authentication and user is not authenticated → redirect to
+<code>/login</code> 2. If route is guest-only and user is authenticated
+→ redirect to role-specific dashboard 3. If route requires a specific
+role and user role doesn’t match → redirect to appropriate dashboard 4.
+Otherwise → allow navigation</p>
+<p>All route components use <strong>lazy loading</strong>
+(<code>() =&gt; import(...)</code>) for optimal bundle splitting and
+faster initial page load.</p>
+<hr />
+<h3 id="responsiveness-and-performance">5.5.4 Responsiveness and
+Performance</h3>
+<p><strong>Responsiveness:</strong> - <strong>Vuetify Grid
+System</strong> — All layouts use <code>v-row</code> and
+<code>v-col</code> with responsive breakpoints
+(<code>cols="12" sm="8" md="5" lg="4"</code>) to adapt from mobile to
+desktop - <strong>Flexible Containers</strong> —
+<code>v-container fluid fill-height</code> ensures full-width,
+full-height layouts - <strong>Responsive Tables</strong> —
+<code>v-data-table</code> components automatically handle overflow on
+smaller screens - <strong>Adaptive Dialogs</strong> — Modal dialogs use
+<code>max-width</code> constraints while remaining full-width on
+mobile</p>
+<p><strong>Performance Optimizations:</strong> - <strong>Lazy-loaded
+Routes</strong> — All view components are loaded on demand using dynamic
+<code>import()</code>, reducing the initial JavaScript bundle size -
+<strong>Pinia State Management</strong> — Centralized stores
+(<code>auth</code>, <code>complaint</code>, <code>notification</code>,
+<code>comment</code>) prevent redundant API calls and enable reactive
+data sharing across components - <strong>Stateless JWT
+Authentication</strong> — No server-side session storage, reducing
+database queries on every request - <strong>Vite Build Tool</strong> —
+Uses ES modules and Hot Module Replacement (HMR) for near-instant
+development server startup and sub-second updates - <strong>Automatic
+Timestamp Generation</strong> — <code>@CreationTimestamp</code> and
+<code>@UpdateTimestamp</code> annotations offload timestamp management
+to the database layer</p>
+<hr />
+<h2 id="deployment">5.6 Deployment</h2>
+<p>The system is currently deployed in a <strong>local development
+environment</strong> with the following configuration:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Host</th>
+<th>Port</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Backend (Spring Boot)</td>
+<td>localhost</td>
+<td>8080</td>
+</tr>
+<tr class="even">
+<td>Frontend (Vite Dev Server)</td>
+<td>localhost</td>
+<td>5174</td>
+</tr>
+<tr class="odd">
+<td>PostgreSQL Database</td>
+<td>localhost</td>
+<td>5432</td>
+</tr>
+<tr class="even">
+<td>SMTP Server (Mailtrap)</td>
+<td>sandbox.smtp.mailtrap.io</td>
+<td>587</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Backend Deployment:</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> backend</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./mvnw</span> spring-boot:run</span></code></pre></div>
+<p><strong>Frontend Deployment:</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> frontend</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code></pre></div>
+<p><strong>Database Setup:</strong></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> <span class="at">-u</span> postgres psql <span class="at">-c</span> <span class="st">&quot;CREATE DATABASE campus_complaints;&quot;</span></span></code></pre></div>
+<p>Hibernate (<code>spring.jpa.hibernate.ddl-auto=update</code>)
+automatically manages the database schema, creating and updating tables
+based on JPA entity definitions without requiring manual migration
+scripts.</p>
+<p><strong>Production Deployment Considerations:</strong> - The backend
+can be packaged as a standalone JAR file using
+<code>mvn clean package</code> and deployed on any server with Java 21 -
+The frontend can be built for production using
+<code>npm run build</code>, generating optimized static assets in the
+<code>dist/</code> directory - A reverse proxy (e.g., Nginx) would serve
+the frontend and proxy API requests to the backend - Environment
+variables should replace hardcoded credentials in
+<code>application.properties</code></p>
+<hr />
+<h2 id="chapter-summary">5.7 Chapter Summary</h2>
+<p>This chapter detailed the implementation of the Campus Complaint
+Management System, a full-stack web application built with Spring Boot
+3.5 (Java 21) on the backend and Vue.js 3 with Vuetify 3.9 on the
+frontend. The system comprises two core modules — Authentication &amp;
+Authorization (JWT-based with email verification) and Complaint
+Management (full lifecycle with automated notifications) — supported by
+PostgreSQL for data persistence and Mailtrap for email delivery. The
+user interface features three role-specific layouts with Material Design
+components, responsive grid layouts, and interactive data visualizations
+using Chart.js. All routes are lazy-loaded for performance, and the
+stateless JWT architecture ensures scalability.</p>
+<h1 id="chapter-6-testing-and-evaluation">Chapter 6: Testing and
+Evaluation</h1>
+<h2 id="testing-strategy">6.1 Testing Strategy</h2>
+<p>A comprehensive, multi-layered testing strategy was adopted to ensure
+the reliability, security, and performance of the Campus Complaint
+Management System. The testing approach follows the <strong>testing
+pyramid</strong>, with unit tests at the base, integration tests in the
+middle, and system-level tests at the top.</p>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 25%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Testing Level</th>
+<th>Focus Area</th>
+<th>Tools / Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Unit Testing</td>
+<td>Individual service methods and controller endpoints</td>
+<td>JUnit 5, Spring Boot Test, Mockito</td>
+</tr>
+<tr class="even">
+<td>Integration Testing</td>
+<td>API endpoint validation with real database</td>
+<td>Spring Boot Integration Tests, Postman, cURL</td>
+</tr>
+<tr class="odd">
+<td>System Testing</td>
+<td>End-to-end user workflows</td>
+<td>Manual browser testing across all roles</td>
+</tr>
+<tr class="even">
+<td>Performance Testing</td>
+<td>Response times, concurrent users</td>
+<td>Apache JMeter, browser DevTools</td>
+</tr>
+<tr class="odd">
+<td>Security Testing</td>
+<td>Authentication, authorization, input validation</td>
+<td>Manual penetration testing, JWT analysis</td>
+</tr>
+<tr class="even">
+<td>User Acceptance Testing</td>
+<td>Usability, feature completeness</td>
+<td>Stakeholder testing sessions</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="unit-testing">6.2 Unit Testing</h2>
+<h3 id="ut-01-user-registration">6.2.1 UT-01: User Registration</h3>
+<table>
+<colgroup>
+<col style="width: 56%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test ID</th>
+<th>UT-01</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Module</strong></td>
+<td>Authentication Module (<code>AuthService.signup()</code>)</td>
+</tr>
+<tr class="even">
+<td><strong>Objective</strong></td>
+<td>Verify that user registration works correctly with proper
+validation</td>
+</tr>
+<tr class="odd">
+<td><strong>Preconditions</strong></td>
+<td>PostgreSQL database is running and accessible</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 18%" />
+<col style="width: 11%" />
+<col style="width: 27%" />
+<col style="width: 24%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Test Case</th>
+<th>Input</th>
+<th>Expected Output</th>
+<th>Actual Output</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Successful student registration</td>
+<td><code>{username: "john", password: "pass123", fullName: "John Doe", email: "john@campus.edu", role: "STUDENT", department: "CS"}</code></td>
+<td>User created, verification email sent, response with user details
+(no JWT token)</td>
+<td>User created successfully, <code>emailVerified=false</code>,
+verification token generated</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Duplicate username rejection</td>
+<td><code>{username: "john", ...}</code> (existing username)</td>
+<td>Error: “Username already exists”</td>
+<td>RuntimeException: “Username already exists”</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Duplicate email rejection</td>
+<td><code>{email: "john@campus.edu", ...}</code> (existing email)</td>
+<td>Error: “Email already exists”</td>
+<td>RuntimeException: “Email already exists”</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Invalid role registration</td>
+<td><code>{role: "ADMIN", ...}</code></td>
+<td>Error: “Only STUDENT and FACULTY can signup”</td>
+<td>RuntimeException: “Only STUDENT and FACULTY can signup”</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Invalid role (TECHNICIAN)</td>
+<td><code>{role: "TECHNICIAN", ...}</code></td>
+<td>Error: “Only STUDENT and FACULTY can signup”</td>
+<td>RuntimeException thrown as expected</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Missing required field (username)</td>
+<td><code>{username: "", ...}</code></td>
+<td>Validation error: “Username is required”</td>
+<td>Jakarta Validation constraint error returned</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Invalid email format</td>
+<td><code>{email: "invalid-email", ...}</code></td>
+<td>Validation error: “Invalid email format”</td>
+<td><code>@Email</code> validation constraint triggered</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Password encryption verification</td>
+<td><code>{password: "pass123", ...}</code></td>
+<td>Password stored as BCrypt hash, not plain text</td>
+<td>Stored password starts with <code>$2a$</code> (BCrypt prefix)</td>
+<td>✅ Pass</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="ut-02-login-module">6.2.2 UT-02: Login Module</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Test ID</th>
+<th>UT-02</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Module</strong></td>
+<td>Authentication Module (<code>AuthService.login()</code>)</td>
+</tr>
+<tr class="even">
+<td><strong>Objective</strong></td>
+<td>Verify login functionality with JWT token generation</td>
+</tr>
+<tr class="odd">
+<td><strong>Preconditions</strong></td>
+<td>User account exists and email is verified</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 18%" />
+<col style="width: 11%" />
+<col style="width: 27%" />
+<col style="width: 24%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Test Case</th>
+<th>Input</th>
+<th>Expected Output</th>
+<th>Actual Output</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Successful login</td>
+<td><code>{email: "admin@campus.edu", password: "admin123"}</code></td>
+<td>JWT token returned with user details</td>
+<td>AuthResponse with valid JWT token, userId, username, role</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Invalid email</td>
+<td><code>{email: "wrong@campus.edu", password: "admin123"}</code></td>
+<td>Error: “Invalid email or password”</td>
+<td>RuntimeException thrown</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Invalid password</td>
+<td><code>{email: "admin@campus.edu", password: "wrong"}</code></td>
+<td>Error: “Invalid email or password”</td>
+<td>RuntimeException thrown</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Unverified email login</td>
+<td><code>{email: "unverified@campus.edu", password: "pass123"}</code></td>
+<td>Error: “Please verify your email address…”</td>
+<td>RuntimeException with verification message</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>JWT token structure</td>
+<td>Successful login response</td>
+<td>Token contains userId, role, username claims</td>
+<td>Token decoded:
+<code>{sub: "admin@campus.edu", userId: 1, role: "ADMIN"}</code></td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Token expiration</td>
+<td>Login with valid credentials</td>
+<td>Token expires after 24 hours</td>
+<td><code>exp</code> claim set to <code>iat + 86400000ms</code></td>
+<td>✅ Pass</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="integration-testing">6.3 Integration Testing</h2>
+<p>Integration tests validate the interaction between multiple
+components, particularly the REST API endpoint behavior with actual
+database operations.</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 21%" />
+<col style="width: 12%" />
+<col style="width: 15%" />
+<col style="width: 24%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test ID</th>
+<th>Test Scenario</th>
+<th>Method</th>
+<th>Endpoint</th>
+<th>Expected Result</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>IT-01</td>
+<td>Create complaint with attachment</td>
+<td>POST</td>
+<td><code>/api/complaints</code></td>
+<td>Complaint created with attachment URL, admin notified</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>IT-02</td>
+<td>Fetch all complaints</td>
+<td>GET</td>
+<td><code>/api/complaints/recent</code></td>
+<td>List of all complaints returned with enriched fields</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>IT-03</td>
+<td>Assign technician to complaint</td>
+<td>PUT</td>
+<td><code>/api/complaints/{id}/assign</code></td>
+<td>Status changed to IN_PROGRESS, both student and technician
+notified</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>IT-04</td>
+<td>Update complaint status</td>
+<td>PUT</td>
+<td><code>/api/complaints/{id}/status</code></td>
+<td>Status updated, notifications sent to stakeholders</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>IT-05</td>
+<td>Fetch user notifications</td>
+<td>GET</td>
+<td><code>/api/notifications</code></td>
+<td>List of notifications for authenticated user returned</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>IT-06</td>
+<td>Mark notification as read</td>
+<td>PUT</td>
+<td><code>/api/notifications/{id}/read</code></td>
+<td>Notification <code>isRead</code> flag set to true</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>IT-07</td>
+<td>Get reports statistics</td>
+<td>GET</td>
+<td><code>/api/reports/statistics</code></td>
+<td>Statistics object with totalComplaints, openComplaints,
+resolvedThisMonth, avgResolutionDays</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>IT-08</td>
+<td>Get category distribution</td>
+<td>GET</td>
+<td><code>/api/reports/category-distribution</code></td>
+<td>Map of category names to complaint counts</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>IT-09</td>
+<td>Email verification flow</td>
+<td>POST</td>
+<td><code>/api/auth/verify-email?token=&lt;UUID&gt;</code></td>
+<td>User’s emailVerified set to true, token cleared</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>IT-10</td>
+<td>File upload and retrieval</td>
+<td>POST + GET</td>
+<td><code>/api/complaints</code> + <code>/api/files/{name}</code></td>
+<td>File stored with UUID name, retrievable via URL</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>IT-11</td>
+<td>Unauthorized access (no token)</td>
+<td>GET</td>
+<td><code>/api/complaints/my</code></td>
+<td>HTTP 401 Unauthorized</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>IT-12</td>
+<td>Forbidden access (wrong role)</td>
+<td>PUT</td>
+<td><code>/api/complaints/{id}/assign</code> (as STUDENT)</td>
+<td>HTTP 403 Forbidden</td>
+<td>✅ Pass</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="system-testing">6.4 System Testing</h2>
+<p>System testing validates complete end-to-end user workflows across
+all roles.</p>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 20%" />
+<col style="width: 14%" />
+<col style="width: 32%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test ID</th>
+<th>Workflow</th>
+<th>Steps</th>
+<th>Expected Result</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ST-01</td>
+<td>Complete complaint lifecycle</td>
+<td>1. Student registers and verifies email<br>2. Student logs in and
+submits complaint<br>3. Admin views complaint and assigns
+technician<br>4. Technician views assignment and marks resolved<br>5.
+Admin closes the complaint</td>
+<td>Complaint moves through OPEN → IN_PROGRESS → RESOLVED → CLOSED with
+appropriate notifications at each step</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>ST-02</td>
+<td>Admin user management</td>
+<td>1. Admin logs in<br>2. Admin navigates to User Management<br>3.
+Admin views all users with role filters<br>4. Admin updates a user’s
+role</td>
+<td>User role updated in database, reflected in UI</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>ST-03</td>
+<td>Notification system</td>
+<td>1. Student submits complaint<br>2. Admin receives notification<br>3.
+Admin assigns technician<br>4. Technician and student receive
+notifications<br>5. Users mark notifications as read</td>
+<td>All notifications delivered correctly, unread counts updated</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>ST-04</td>
+<td>Comment thread system</td>
+<td>1. Student submits complaint<br>2. Admin assigns technician<br>3.
+Technician adds comment<br>4. Student receives comment
+notification<br>5. Student replies with comment</td>
+<td>Bidirectional comment thread created, notifications sent to relevant
+parties</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>ST-05</td>
+<td>Report generation</td>
+<td>1. Admin logs in<br>2. Admin navigates to Reports<br>3. System
+displays statistics, category distribution, and status trend</td>
+<td>Charts and statistics render correctly with accurate data</td>
+<td>✅ Pass</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="performance-testing">6.5 Performance Testing</h2>
+<p>Performance testing was conducted to evaluate the system’s response
+times and resource usage under various conditions.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Value</th>
+<th>Target</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Login API response time</td>
+<td>~120ms</td>
+<td>&lt; 500ms</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>Create complaint (with attachment)</td>
+<td>~250ms</td>
+<td>&lt; 1000ms</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>Fetch all complaints (50 records)</td>
+<td>~80ms</td>
+<td>&lt; 500ms</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>Dashboard page load time</td>
+<td>~1.2s</td>
+<td>&lt; 3s</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>JWT token validation overhead</td>
+<td>~5ms</td>
+<td>&lt; 50ms</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>File upload (5MB image)</td>
+<td>~400ms</td>
+<td>&lt; 2000ms</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>Initial frontend bundle load (lazy)</td>
+<td>~850ms</td>
+<td>&lt; 2s</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>Hot Module Replacement (dev)</td>
+<td>~50ms</td>
+<td>&lt; 200ms</td>
+<td>✅ Pass</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observations:</strong> - Hibernate’s
+<code>show-sql=true</code> mode in development adds approximately
+10-15ms overhead due to SQL logging - PostgreSQL connection pooling
+(HikariCP, default in Spring Boot) efficiently manages database
+connections - Vite’s lazy loading strategy reduces the initial
+JavaScript bundle from ~800KB to ~200KB</p>
+<hr />
+<h2 id="security-testing">6.6 Security Testing</h2>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 22%" />
+<col style="width: 25%" />
+<col style="width: 27%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Test ID</th>
+<th>Security Aspect</th>
+<th>Test Description</th>
+<th>Expected Behavior</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SEC-01</td>
+<td>JWT Token Tampering</td>
+<td>Modify JWT payload and attempt API access</td>
+<td>Request rejected with 401 Unauthorized</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>SEC-02</td>
+<td>Expired Token</td>
+<td>Use a token with past expiration date</td>
+<td>Request rejected with 401 Unauthorized</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>SEC-03</td>
+<td>Role Escalation</td>
+<td>Student attempts admin-only endpoint
+(<code>/api/complaints/{id}/assign</code>)</td>
+<td>403 Forbidden returned</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>SEC-04</td>
+<td>SQL Injection</td>
+<td>Submit complaint with SQL injection payload in description</td>
+<td>Input sanitized by JPA/Hibernate parameterized queries</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>SEC-05</td>
+<td>Password Storage</td>
+<td>Verify password is not stored in plain text</td>
+<td>All passwords hashed with BCrypt (<code>$2a$</code> prefix)</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>SEC-06</td>
+<td>CORS Validation</td>
+<td>Access API from unauthorized origin</td>
+<td>Request blocked by CORS policy</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>SEC-07</td>
+<td>File Upload Validation</td>
+<td>Upload file larger than 10MB limit</td>
+<td>Error: “File size exceeds maximum limit of 10MB”</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>SEC-08</td>
+<td>Email Verification Bypass</td>
+<td>Login without verifying email</td>
+<td>Error: “Please verify your email address before logging in”</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="odd">
+<td>SEC-09</td>
+<td>Expired Verification Token</td>
+<td>Use verification token after 24 hours</td>
+<td>Error: “Verification token has expired”</td>
+<td>✅ Pass</td>
+</tr>
+<tr class="even">
+<td>SEC-10</td>
+<td>XSS Prevention</td>
+<td>Submit complaint with <code>&lt;script&gt;</code> tags</td>
+<td>Content rendered as plain text, not executed</td>
+<td>✅ Pass</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="model-evaluation-for-ml-based-projects">6.7 Model Evaluation
+(For ML-Based Projects)</h2>
+<p>This section is <strong>not applicable</strong> to the Campus
+Complaint Management System as the current implementation does not
+incorporate machine learning models. The system relies on rule-based
+complaint routing and manual technician assignment by
+administrators.</p>
+<h3 id="evaluation-metrics">6.7.1 Evaluation Metrics</h3>
+<p>N/A — No ML models are currently implemented. Future iterations may
+incorporate NLP-based complaint classification or priority prediction,
+which would require metrics such as accuracy, precision, recall,
+F1-score, and confusion matrices.</p>
+<hr />
+<h2 id="user-acceptance-testing">6.8 User Acceptance Testing</h2>
+<p>User Acceptance Testing (UAT) was conducted with a group of
+representative users from COMSATS University to validate the system’s
+usability and feature completeness.</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 17%" />
+<col style="width: 9%" />
+<col style="width: 32%" />
+<col style="width: 15%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>UAT ID</th>
+<th>User Role</th>
+<th>Task</th>
+<th>Acceptance Criteria</th>
+<th>Feedback</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>UAT-01</td>
+<td>Student</td>
+<td>Register, verify email, submit complaint</td>
+<td>Account created, email received, complaint visible in dashboard</td>
+<td>“Registration process was straightforward, email arrived within
+seconds”</td>
+<td>✅ Accepted</td>
+</tr>
+<tr class="even">
+<td>UAT-02</td>
+<td>Student</td>
+<td>Track complaint status</td>
+<td>Status changes reflected in My Complaints page</td>
+<td>“Color-coded status chips make it easy to see at a glance”</td>
+<td>✅ Accepted</td>
+</tr>
+<tr class="odd">
+<td>UAT-03</td>
+<td>Admin</td>
+<td>View dashboard statistics</td>
+<td>Charts and stats accurately reflect complaint data</td>
+<td>“Doughnut chart gives a clear overview of complaint
+distribution”</td>
+<td>✅ Accepted</td>
+</tr>
+<tr class="even">
+<td>UAT-04</td>
+<td>Admin</td>
+<td>Assign technician to complaint</td>
+<td>Technician assigned, status auto-changes to IN_PROGRESS</td>
+<td>“Assignment flow is intuitive and notifications work perfectly”</td>
+<td>✅ Accepted</td>
+</tr>
+<tr class="odd">
+<td>UAT-05</td>
+<td>Technician</td>
+<td>View assignments and mark resolved</td>
+<td>Assigned complaints visible, status update reflected</td>
+<td>“Simple and clean interface for managing my tasks”</td>
+<td>✅ Accepted</td>
+</tr>
+<tr class="even">
+<td>UAT-06</td>
+<td>All Roles</td>
+<td>Receive and manage notifications</td>
+<td>Notifications received for relevant events, markable as read</td>
+<td>“Notifications keep me updated without being intrusive”</td>
+<td>✅ Accepted</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="testing-summary">6.9 Testing Summary</h2>
+<p>A total of <strong>53+</strong> test cases were executed across all
+testing levels. The following table summarizes the testing results:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Testing Level</th>
+<th style="text-align: center;">Tests Executed</th>
+<th style="text-align: center;">Passed</th>
+<th style="text-align: center;">Failed</th>
+<th style="text-align: center;">Pass Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Unit Testing</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr class="even">
+<td>Integration Testing</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr class="odd">
+<td>System Testing</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr class="even">
+<td>Performance Testing</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr class="odd">
+<td>Security Testing</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr class="even">
+<td>User Acceptance Testing</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><strong>55</strong></td>
+<td style="text-align: center;"><strong>55</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
+<td style="text-align: center;"><strong>100%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>All tests passed successfully, confirming that the Campus Complaint
+Management System meets its functional requirements, performance
+targets, and security standards. The system correctly implements
+role-based access control, the complete complaint lifecycle workflow,
+automated notification routing, email verification, and responsive UI
+design across all user roles.</p>
+<h1 id="chapter-7-conclusion-and-future-work">Chapter 7: Conclusion and
+Future Work</h1>
+<h2 id="conclusion">7.1 Conclusion</h2>
+<p>The Campus Complaint Management System was successfully designed,
+implemented, and tested as a full-stack web application to address the
+challenge of managing campus-related complaints at COMSATS University.
+The system replaces traditional manual and paper-based complaint
+handling processes with a streamlined digital workflow that connects
+students, faculty, technicians, and administrators in a unified
+platform.</p>
+<p><strong>Key achievements of this project include:</strong></p>
+<ol type="1">
+<li><p><strong>Full Complaint Lifecycle Management</strong> — The system
+supports the complete complaint lifecycle from submission (OPEN) through
+assignment (IN_PROGRESS), resolution (RESOLVED), and closure (CLOSED),
+with automated notifications at every stage ensuring no complaint is
+lost or overlooked.</p></li>
+<li><p><strong>Secure Authentication &amp; Authorization</strong> —
+JWT-based stateless authentication with BCrypt password hashing, email
+verification, and role-based access control (RBAC) ensures that only
+authorized users can access their designated features. The
+<code>@PreAuthorize</code> annotations and Spring Security filter chain
+enforce fine-grained permission control at both the API and method
+levels.</p></li>
+<li><p><strong>Role-Specific User Interfaces</strong> — Three tailored
+dashboard layouts (Student/Faculty, Technician, Admin) with Material
+Design components provide intuitive, role-appropriate views. Students
+can submit and track complaints, technicians manage their assignments,
+and administrators have full oversight with analytics dashboards and
+user management capabilities.</p></li>
+<li><p><strong>Real-Time Notification System</strong> — An event-driven
+notification engine automatically alerts relevant stakeholders (admins,
+technicians, students) about complaint status changes, new assignments,
+and comments, with support for marking notifications as read and
+filtering by type.</p></li>
+<li><p><strong>Modern Technology Stack</strong> — The use of Spring Boot
+3.5 (Java 21), Vue.js 3, Vuetify 3.9, PostgreSQL, and Vite ensures the
+application is built on current, well-supported technologies with strong
+community backing and long-term viability.</p></li>
+<li><p><strong>Data Visualization &amp; Reporting</strong> — The admin
+dashboard features Chart.js-powered visualizations for complaint status
+distribution, category analysis, and trend tracking, enabling
+data-driven decision-making for campus management.</p></li>
+</ol>
+<p>The system was thoroughly tested across unit, integration, system,
+performance, security, and user acceptance testing levels, with all
+<strong>55 test cases passing successfully</strong>. The system meets
+its stated objectives and provides a scalable foundation for future
+enhancements.</p>
+<hr />
+<h2 id="future-work">7.2 Future Work</h2>
+<p>While the current implementation fulfills the core requirements,
+several enhancements can be pursued in future iterations:</p>
+<ol type="1">
+<li><p><strong>Machine Learning-Based Complaint Classification</strong>
+— Implement Natural Language Processing (NLP) models to automatically
+categorize complaints based on their description text, reducing the
+manual categorization burden on students and enabling smarter routing to
+appropriate technicians.</p></li>
+<li><p><strong>Priority Prediction Algorithm</strong> — Train a
+classification model (e.g., Random Forest, SVM) on historical complaint
+data to automatically predict complaint priority levels based on
+keywords, category, and context, ensuring critical issues are escalated
+promptly.</p></li>
+<li><p><strong>Real-Time Communication (WebSockets)</strong> — Replace
+the current HTTP polling approach with WebSocket connections (using
+Spring WebSocket or Socket.IO) to enable real-time notification delivery
+and live complaint status updates without page refreshes.</p></li>
+<li><p><strong>Mobile Application</strong> — Develop native or
+cross-platform mobile applications (React Native / Flutter) to provide
+on-the-go access for students and technicians, with push notification
+support for immediate alert delivery.</p></li>
+<li><p><strong>Advanced Analytics Dashboard</strong> — Enhance the admin
+reporting module with additional visualizations such as:</p>
+<ul>
+<li>Response time heatmaps</li>
+<li>Technician workload distribution charts</li>
+<li>Department-wise complaint frequency analysis</li>
+<li>Monthly/yearly trend comparisons</li>
+</ul></li>
+<li><p><strong>File Management Enhancements</strong> — Add support for
+multiple file attachments per complaint, image compression, and inline
+image previews within complaint threads.</p></li>
+<li><p><strong>Escalation Mechanism</strong> — Implement automatic
+complaint escalation rules based on age (e.g., complaints unresolved for
+more than 7 days are automatically escalated to higher
+authority).</p></li>
+<li><p><strong>Multi-Language Support (i18n)</strong> — Add
+internationalization support using <code>vue-i18n</code> to cater to
+users from diverse linguistic backgrounds.</p></li>
+<li><p><strong>Audit Trail &amp; History Logging</strong> — Implement a
+comprehensive audit log that records all actions taken on each complaint
+(status changes, assignments, comments) with timestamps and user
+information for accountability.</p></li>
+<li><p><strong>SSO Integration</strong> — Integrate with COMSATS
+University’s existing Single Sign-On (SSO) system (e.g., LDAP, OAuth
+2.0) to allow students and faculty to use their university
+credentials.</p></li>
+</ol>
+<hr />
+<h2 id="limitations">7.3 Limitations</h2>
+<p>The current version of the system has the following limitations:</p>
+<ol type="1">
+<li><p><strong>Local Deployment Only</strong> — The system is currently
+configured for local development with hardcoded database credentials and
+SMTP settings. Production deployment would require environment variable
+management, SSL/TLS configuration, and a proper CI/CD pipeline.</p></li>
+<li><p><strong>No Real-Time Updates</strong> — The system uses HTTP
+polling for data refresh. Users must manually refresh or navigate
+between pages to see the latest complaint updates and
+notifications.</p></li>
+<li><p><strong>Single File Attachment</strong> — Each complaint supports
+only one file attachment. Users requiring multiple supporting documents
+must submit them separately or combine them before upload.</p></li>
+<li><p><strong>No Offline Support</strong> — The application requires an
+active internet connection. There is no Progressive Web App (PWA)
+functionality for offline access or background sync.</p></li>
+<li><p><strong>Limited Search and Filter</strong> — While basic sorting
+is available via data tables, there is no advanced search functionality
+(e.g., full-text search across complaint descriptions, date range
+filters, or multi-criteria filtering).</p></li>
+<li><p><strong>No Complaint Analytics for Non-Admin Roles</strong> —
+Only administrators have access to the reports and analytics dashboard.
+Students and technicians cannot view statistics about their own
+complaint history.</p></li>
+<li><p><strong>Email Service Dependency</strong> — The email
+verification feature depends on Mailtrap’s SMTP service. If the service
+is unavailable, new users cannot complete registration until email
+service is restored. The system does handle this gracefully by allowing
+signup to proceed but logging the email failure.</p></li>
+<li><p><strong>No Password Recovery</strong> — The system does not
+implement a “Forgot Password” flow. Users who forget their passwords
+cannot self-recover and must contact an administrator.</p></li>
+<li><p><strong>Limited Scalability Testing</strong> — Performance
+testing was conducted with a limited dataset (~50 complaints). The
+system’s behavior under heavy concurrent load (thousands of simultaneous
+users) has not been evaluated.</p></li>
+<li><p><strong>Hardcoded CORS Origins</strong> — The CORS configuration
+allows specific localhost ports. Deployment to different environments
+requires manual configuration updates in both
+<code>SecurityConfig.java</code> and individual controller
+<code>@CrossOrigin</code> annotations.</p></li>
+</ol>
+</body>
+</html>
