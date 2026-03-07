@@ -374,7 +374,8 @@ const animateValue = (key, target, duration = 1500) => {
 
 const fetchStats = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/stats')
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+    const response = await axios.get(`${apiBaseUrl}/stats`)
     const data = response.data
     
     animateValue('resolvedComplaints', data.resolvedComplaints)
