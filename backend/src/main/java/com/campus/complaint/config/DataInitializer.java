@@ -29,6 +29,7 @@ public class DataInitializer implements CommandLineRunner {
                     .department("All")
                     .role(Role.ADMIN)
                     .active(true)
+                    .emailVerified(true)
                     .build();
             userRepository.save(admin);
             System.out.println("Default admin user created: email='admin@campus.edu', password='admin123'");
