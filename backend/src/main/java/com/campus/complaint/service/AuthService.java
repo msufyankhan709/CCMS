@@ -106,11 +106,6 @@ public class AuthService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        // Check if email is verified
-        if (!user.getEmailVerified()) {
-            throw new RuntimeException("Please verify your email address before logging in. Check your inbox for the verification link.");
-        }
-
         String token = jwtTokenUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
 
         return AuthResponse.builder()
