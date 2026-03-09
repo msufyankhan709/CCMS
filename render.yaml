@@ -1,10 +1,10 @@
-databases:
-  - name: ccms-db
+services:
+  - type: pghost
+    name: ccms-db
     databaseName: campus_complaints
     user: campusapp
     plan: free
 
-services:
   - type: web
     name: ccms-backend
     env: docker
@@ -39,15 +39,16 @@ services:
         value: 8080
       - key: FRONTEND_URL
         sync: false
-        # Note: You will set this to the frontend URL in the Render dashboard after deploying
 
-  - type: web
+  - type: static
     name: ccms-frontend
-    env: docker
-    dockerContext: .
-    dockerfilePath: ./frontend/Dockerfile
-    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
         sync: false
-        # Note: You will set this in the Render dashboard after deploying the backend (e.g. https://ccms-backend...onrender.com/api)
