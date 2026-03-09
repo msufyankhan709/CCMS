@@ -1,0 +1,53 @@
+databases:
+  - name: ccms-db
+    databaseName: campus_complaints
+    user: campusapp
+    plan: free
+
+services:
+  - type: web
+    name: ccms-backend
+    env: docker
+    dockerContext: .
+    dockerfilePath: ./backend/Dockerfile
+    plan: free
+    healthCheckPath: /api/stats
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: ccms-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: ccms-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: ccms-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: ccms-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: ccms-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 8080
+      - key: FRONTEND_URL
+        sync: false
+        # Note: You will set this to the frontend URL in the Render dashboard after deploying
+
+  - type: web
+    name: ccms-frontend
+    env: docker
+    dockerContext: .
+    dockerfilePath: ./frontend/Dockerfile
+    plan: free
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false
+        # Note: You will set this in the Render dashboard after deploying the backend (e.g. https://ccms-backend...onrender.com/api)
