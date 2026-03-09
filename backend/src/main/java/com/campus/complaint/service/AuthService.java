@@ -70,7 +70,7 @@ public class AuthService {
                 .department(request.getDepartment())
                 .role(request.getRole())
                 .active(true)
-                .emailVerified(false)
+                .emailVerified(true) // Disable mandatory verification for now
                 .verificationToken(verificationToken)
                 .verificationTokenExpiry(tokenExpiry)
                 .build();
@@ -85,14 +85,16 @@ public class AuthService {
             System.err.println("Failed to send verification email: " + e.getMessage());
         }
 
-        // Return response without token - user needs to verify email first
+        // Generate JWT token so user is logged in automatically
+        String token = jwtTokenUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
+
         return AuthResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
                 .role(user.getRole().name())
-                .token(null) // No token until email is verified
+                .token(token)
                 .build();
     }
 
