@@ -1,10 +1,10 @@
-services:
-  - type: pghost
-    name: ccms-db
+databases:
+  - name: ccms-db
     databaseName: campus_complaints
     user: campusapp
     plan: free
 
+services:
   - type: web
     name: ccms-backend
     env: docker
