@@ -10,7 +10,7 @@
     <v-card elevation="2">
       <v-card-title class="d-flex flex-wrap justify-space-between align-center ga-2">
         <span>All My Complaints</span>
-        <v-btn color="primary" :size="mobile ? 'small' : 'default'" @click="$router.push('/student/dashboard')">
+        <v-btn color="primary" :size="mobile ? 'small' : 'default'" @click="newComplaintDialog = true">
           <v-icon start>mdi-plus</v-icon>
           Submit New Complaint
         </v-btn>
@@ -269,6 +269,8 @@
       </v-card>
     </v-dialog>
 
+    <NewComplaintModal v-model="newComplaintDialog" />
+
 
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="3000">
       {{ snackbar.text }}
@@ -282,6 +284,7 @@ import { useDisplay } from 'vuetify'
 import { useComplaintStore } from '../stores/complaint'
 import { useCommentStore } from '../stores/comment'
 import { useAuthStore } from '../stores/auth'
+import NewComplaintModal from '../components/NewComplaintModal.vue'
 
 const { mobile } = useDisplay()
 const complaintStore = useComplaintStore()
@@ -293,6 +296,7 @@ const complaints = ref([])
 const detailsDialog = ref(false)
 const selectedComplaint = ref(null)
 const newComment = ref('')
+const newComplaintDialog = ref(false)
 
 const snackbar = ref({
   show: false,
