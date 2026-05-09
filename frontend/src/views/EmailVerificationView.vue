@@ -111,15 +111,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import axios from 'axios'
+import api from '../services/api'
 
 const router = useRouter()
 const route = useRoute()
 
 const verificationState = ref('loading')
 const message = ref('')
-
-const API_URL = 'http://localhost:8080/api/auth'
 
 onMounted(async () => {
   const token = route.query.token
@@ -130,7 +128,7 @@ onMounted(async () => {
   }
 
   try {
-    const response = await axios.post(`${API_URL}/verify-email?token=${token}`)
+    const response = await api.post(`/auth/verify-email?token=${token}`)
     message.value = response.data
     verificationState.value = 'success'
     

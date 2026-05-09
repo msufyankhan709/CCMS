@@ -70,7 +70,7 @@ public class AuthService {
                 .department(request.getDepartment())
                 .role(request.getRole())
                 .active(true)
-                .emailVerified(true) // Disable mandatory verification for now
+                .emailVerified(false) // Enable mandatory email verification
                 .verificationToken(verificationToken)
                 .verificationTokenExpiry(tokenExpiry)
                 .build();
@@ -81,20 +81,18 @@ public class AuthService {
         try {
             emailService.sendVerificationEmail(user.getEmail(), user.getFullName(), verificationToken);
         } catch (Exception e) {
-            // If email fails, still allow signup but log the error
+            // Log the error
             System.err.println("Failed to send verification email: " + e.getMessage());
         }
 
-        // Generate JWT token so user is logged in automatically
-        String token = jwtTokenUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
-
+        // Return signup confirmation (no login token generated yet to enforce verification)
         return AuthResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
                 .role(user.getRole().name())
-                .token(token)
+                .token(null)
                 .build();
     }
 
@@ -104,6 +102,11 @@ public class AuthService {
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid email or password");
+        }
+
+        // Enforce email verification check during login
+        if (Boolean.FALSE.equals(user.getEmailVerified())) {
+            throw new RuntimeException("Your email address is not verified. Please check your inbox for the verification link.");
         }
 
         String token = jwtTokenUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());

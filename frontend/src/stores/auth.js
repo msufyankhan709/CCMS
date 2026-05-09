@@ -11,8 +11,8 @@ export const useAuthStore = defineStore('auth', () => {
     // Load from localStorage on init
     const storedUser = localStorage.getItem('user')
     const storedToken = localStorage.getItem('token')
-    if (storedUser) user.value = JSON.parse(storedUser)
-    if (storedToken) token.value = storedToken
+    if (storedUser && storedUser !== 'null') user.value = JSON.parse(storedUser)
+    if (storedToken && storedToken !== 'null') token.value = storedToken
 
     const isAuthenticated = computed(() => !!token.value)
     const userRole = computed(() => user.value?.role)
@@ -44,11 +44,13 @@ export const useAuthStore = defineStore('auth', () => {
             error.value = null
             const response = await api.post('/auth/signup', data)
 
-            user.value = response.data
-            token.value = response.data.token
-
-            localStorage.setItem('user', JSON.stringify(response.data))
-            localStorage.setItem('token', response.data.token)
+            // Do not log user in if verification token requires them to verify first
+            if (response.data.token) {
+                user.value = response.data
+                token.value = response.data.token
+                localStorage.setItem('user', JSON.stringify(response.data))
+                localStorage.setItem('token', response.data.token)
+            }
 
             return response.data
         } catch (err) {
