@@ -15,6 +15,7 @@
           <a @click="scrollTo('features')" class="nav-link">Features</a>
           <a @click="scrollTo('how-it-works')" class="nav-link">How It Works</a>
           <a @click="scrollTo('testimonials')" class="nav-link">Testimonials</a>
+          <a @click="$router.push('/about')" class="nav-link">About Us</a>
         </nav>
         <div class="nav-actions d-none d-md-flex">
           <button class="btn-login" @click="$router.push('/login')">
@@ -41,6 +42,7 @@
           <a class="mobile-link" @click="scrollTo('features'); mobileMenu = false">Features</a>
           <a class="mobile-link" @click="scrollTo('how-it-works'); mobileMenu = false">How It Works</a>
           <a class="mobile-link" @click="scrollTo('testimonials'); mobileMenu = false">Testimonials</a>
+          <a class="mobile-link" @click="$router.push('/about'); mobileMenu = false">About Us</a>
           <a class="mobile-link" href="https://vhr-cms.comsats.edu.pk/" target="_blank">COMSATS Website</a>
         </div>
         <button class="btn-mobile-login" @click="$router.push('/login'); mobileMenu = false">Login</button>
@@ -390,6 +392,7 @@ const handleScroll = () => { scrolled.value = window.scrollY > 40 }
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  handleScroll() // Add this to check position immediately
   fetchStats()
 })
 
@@ -467,10 +470,17 @@ const ctaTrust = [
 .landing-app { overflow-x: hidden !important; }
 .landing-app :deep(.v-main) { overflow-x: hidden; padding: 0 !important; }
 * { box-sizing: border-box; }
-.container {
-  max-width: 1200px;
+.container, .hero-container {
+  max-width: 1400px;
+  width: 90%;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+@media (min-width: 1440px) {
+  .container, .hero-container {
+    width: 70%; /* Direct response to "should be 70%" */
+  }
 }
 .cursor-pointer { cursor: pointer; }
 
@@ -491,12 +501,19 @@ const ctaTrust = [
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 .nav-container {
-  max-width: 1200px;
+  max-width: 1400px;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 64px;
+}
+
+@media (min-width: 1440px) {
+  .nav-container {
+    width: 70%;
+  }
 }
 .nav-brand {
   display: flex;
@@ -631,10 +648,18 @@ const ctaTrust = [
 }
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
   min-height: calc(100vh - 64px);
   gap: 48px;
+  padding: 40px 0;
+}
+
+@media (min-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+  }
 }
 .hero-badge {
   display: inline-flex;
@@ -649,7 +674,7 @@ const ctaTrust = [
   margin-bottom: 32px;
 }
 .hero-heading {
-  font-size: 3.2rem;
+  font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 800;
   line-height: 1.1;
   color: white;
@@ -669,11 +694,22 @@ const ctaTrust = [
   max-width: 520px;
 }
 .hero-stats {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 12px;
   margin-bottom: 32px;
-  flex-wrap: wrap;
+}
+
+@media (min-width: 600px) {
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 .stat-card {
   display: flex;
