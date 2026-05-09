@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
-
-const API_URL = 'http://localhost:8080/api'
+import api from '../services/api'
 
 export const useNotificationStore = defineStore('notification', {
     state: () => ({
@@ -21,10 +19,7 @@ export const useNotificationStore = defineStore('notification', {
             this.loading = true
             this.error = null
             try {
-                const token = localStorage.getItem('token')
-                const response = await axios.get(`${API_URL}/notifications`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                const response = await api.get('/notifications')
                 this.notifications = response.data
                 await this.fetchUnreadCount()
             } catch (error) {
@@ -37,10 +32,7 @@ export const useNotificationStore = defineStore('notification', {
 
         async fetchUnreadCount() {
             try {
-                const token = localStorage.getItem('token')
-                const response = await axios.get(`${API_URL}/notifications/unread-count`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                const response = await api.get('/notifications/unread-count')
                 this.unreadCount = response.data.count
             } catch (error) {
                 console.error('Error fetching unread count:', error)
@@ -49,10 +41,7 @@ export const useNotificationStore = defineStore('notification', {
 
         async markAsRead(notificationId) {
             try {
-                const token = localStorage.getItem('token')
-                await axios.put(`${API_URL}/notifications/${notificationId}/read`, {}, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                await api.put(`/notifications/${notificationId}/read`)
 
                 const notification = this.notifications.find(n => n.id === notificationId)
                 if (notification) {
@@ -67,10 +56,7 @@ export const useNotificationStore = defineStore('notification', {
 
         async markAllAsRead() {
             try {
-                const token = localStorage.getItem('token')
-                await axios.put(`${API_URL}/notifications/read-all`, {}, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                await api.put('/notifications/read-all')
 
                 this.notifications.forEach(n => n.isRead = true)
                 this.unreadCount = 0
@@ -82,10 +68,7 @@ export const useNotificationStore = defineStore('notification', {
 
         async deleteNotification(notificationId) {
             try {
-                const token = localStorage.getItem('token')
-                await axios.delete(`${API_URL}/notifications/${notificationId}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+                await api.delete(`/notifications/${notificationId}`)
 
                 const index = this.notifications.findIndex(n => n.id === notificationId)
                 if (index !== -1) {
