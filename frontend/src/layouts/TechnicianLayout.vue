@@ -25,7 +25,11 @@
           rounded="xl"
           class="my-1 mx-2 sidebar-item"
           @click="onNavClick"
-        ></v-list-item>
+        >
+          <template v-slot:append v-if="item.title === 'Notifications' && notificationStore.unreadCount > 0">
+            <v-badge :content="notificationStore.unreadCount" color="error" inline></v-badge>
+          </template>
+        </v-list-item>
       </v-list>
 
       <template v-slot:append>
@@ -42,8 +46,10 @@
       <v-app-bar-nav-icon color="white" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="text-white">{{ currentPageTitle }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon color="white" @click="$router.push('/technician/notifications')">
-        <v-icon>mdi-bell</v-icon>
+      <v-btn icon color="white" @click="$router.push('/technician/notifications')" class="mr-3">
+        <v-badge :content="notificationStore.unreadCount" :model-value="notificationStore.unreadCount > 0" color="error" floating>
+          <v-icon>mdi-bell</v-icon>
+        </v-badge>
       </v-btn>
     </v-app-bar>
 
@@ -56,14 +62,16 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useDisplay } from 'vuetify'
 import { useAuthStore } from '../stores/auth'
+import { useNotificationStore } from '../stores/notification'
 
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
+const notificationStore = useNotificationStore()
 const { mobile } = useDisplay()
 
 const drawer = ref(!mobile.value)
@@ -76,6 +84,20 @@ const onNavClick = () => {
 
 watch(mobile, (isMobile) => {
   drawer.value = !isMobile
+})
+
+let pollingInterval = null
+
+// Fetch unread count on mount and poll every 30s
+onMounted(() => {
+  notificationStore.fetchUnreadCount()
+  pollingInterval = setInterval(() => notificationStore.fetchUnreadCount(), 30000)
+})
+
+onBeforeUnmount(() => {
+  if (pollingInterval) {
+    clearInterval(pollingInterval)
+  }
 })
 
 const menuItems = [

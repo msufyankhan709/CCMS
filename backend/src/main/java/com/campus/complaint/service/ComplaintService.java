@@ -199,7 +199,13 @@ public class ComplaintService {
             throw new RuntimeException("You can only delete your own complaints.");
         }
 
+        String complaintTitle = complaint.getTitle();
+        String studentName = complaint.getStudent().getFullName();
+
         complaintRepository.delete(complaint);
+
+        // Notify admins about the complaint deletion
+        notificationService.notifyAdminsComplaintDeleted(complaintTitle, studentName);
     }
     // Helper method to populate transient fields
     private Complaint enrichComplaint(Complaint complaint) {

@@ -163,4 +163,40 @@ public class NotificationService {
                 .build();
         notificationRepository.save(notification);
     }
+
+    /**
+     * Notify all admins about a new user registration
+     */
+    @Transactional
+    public void notifyAdminsNewUser(String fullName, String email, String role) {
+        List<User> admins = userRepository.findByRole(Role.ADMIN);
+        for (User admin : admins) {
+            Notification notification = Notification.builder()
+                    .userId(admin.getId())
+                    .title("New User Registered")
+                    .message("New " + role + " registered: " + fullName + " (" + email + ")")
+                    .type(NotificationType.SYSTEM)
+                    .isRead(false)
+                    .build();
+            notificationRepository.save(notification);
+        }
+    }
+
+    /**
+     * Notify all admins about a complaint deletion
+     */
+    @Transactional
+    public void notifyAdminsComplaintDeleted(String complaintTitle, String studentName) {
+        List<User> admins = userRepository.findByRole(Role.ADMIN);
+        for (User admin : admins) {
+            Notification notification = Notification.builder()
+                    .userId(admin.getId())
+                    .title("Complaint Deleted")
+                    .message(studentName + " deleted their complaint: \"" + complaintTitle + "\"")
+                    .type(NotificationType.SYSTEM)
+                    .isRead(false)
+                    .build();
+            notificationRepository.save(notification);
+        }
+    }
 }

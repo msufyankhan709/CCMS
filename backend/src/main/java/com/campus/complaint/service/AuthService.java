@@ -30,6 +30,9 @@ public class AuthService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Transactional
     public AuthResponse signup(SignupRequest request) {
         // Auto-generate username from email if not provided
@@ -83,6 +86,13 @@ public class AuthService {
         } catch (Exception e) {
             // Log the error
             System.err.println("Failed to send verification email: " + e.getMessage());
+        }
+
+        // Notify admins about new user registration
+        try {
+            notificationService.notifyAdminsNewUser(user.getFullName(), user.getEmail(), user.getRole().name());
+        } catch (Exception e) {
+            System.err.println("Failed to notify admins about new user: " + e.getMessage());
         }
 
         // Return signup confirmation (no login token generated yet to enforce verification)
