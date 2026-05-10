@@ -281,12 +281,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify'
+import { useRoute } from 'vue-router'
 import { useComplaintStore } from '../stores/complaint'
 import { useCommentStore } from '../stores/comment'
 import { useAuthStore } from '../stores/auth'
 import NewComplaintModal from '../components/NewComplaintModal.vue'
 
 const { mobile } = useDisplay()
+const route = useRoute()
 const complaintStore = useComplaintStore()
 const commentStore = useCommentStore()
 const authStore = useAuthStore()
@@ -316,6 +318,15 @@ const headers = [
 
 onMounted(async () => {
   await loadComplaints()
+  
+  // Auto-open complaint from notification click
+  const complaintId = route.query.complaintId
+  if (complaintId) {
+    const complaint = complaints.value.find(c => c.id === Number(complaintId))
+    if (complaint) {
+      viewDetails(complaint)
+    }
+  }
 })
 
 const loadComplaints = async () => {

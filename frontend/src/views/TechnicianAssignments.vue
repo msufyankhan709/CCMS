@@ -232,11 +232,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useDisplay } from 'vuetify'
+import { useRoute } from 'vue-router'
 import { useComplaintStore } from '../stores/complaint'
 import { useCommentStore } from '../stores/comment'
 import { useAuthStore } from '../stores/auth'
 
 const { mobile } = useDisplay()
+const route = useRoute()
 const complaintStore = useComplaintStore()
 const commentStore = useCommentStore()
 const authStore = useAuthStore()
@@ -263,6 +265,15 @@ const statusOptions = ['OPEN', 'IN_PROGRESS', 'RESOLVED', 'CLOSED']
 
 onMounted(async () => {
   await loadAssignments()
+  
+  // Auto-open complaint from notification click
+  const complaintId = route.query.complaintId
+  if (complaintId) {
+    const complaint = assignments.value.find(c => c.id === Number(complaintId))
+    if (complaint) {
+      viewDetails(complaint)
+    }
+  }
 })
 
 const loadAssignments = async () => {

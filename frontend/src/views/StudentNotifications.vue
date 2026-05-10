@@ -43,6 +43,7 @@
             <v-list-item
               :class="{ 'bg-blue-lighten-5': !notification.isRead }"
               @click="handleNotificationClick(notification)"
+              style="cursor: pointer;"
             >
               <template v-slot:prepend>
                 <v-avatar :color="getNotificationColor(notification.type)">
@@ -154,9 +155,9 @@ const handleNotificationClick = async (notification) => {
     await notificationStore.markAsRead(notification.id)
   }
   
-  // Navigate to related entity if available
-  if (notification.relatedEntityId && notification.type === 'COMPLAINT') {
-    router.push(`/student/complaints`)
+  // Navigate to the specific complaint if available
+  if (notification.relatedEntityId) {
+    router.push({ path: '/student/my-complaints', query: { complaintId: notification.relatedEntityId } })
   }
 }
 
