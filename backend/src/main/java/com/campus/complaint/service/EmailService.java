@@ -15,22 +15,22 @@ public class EmailService {
     @Value("${app.frontend.url}")
     private String frontendUrl;
 
-    @Value("${resend.api.key:${RESEND_API_KEY:}}")
-    private String resendApiKey;
+    @Value("${brevo.api.key:${BREVO_API_KEY:}}")
+    private String brevoApiKey;
 
     @Async
     public void sendVerificationEmail(String toEmail, String fullName, String verificationToken) {
         try {
-            System.out.println("Attempting to send verification email via Resend to: " + toEmail);
+            System.out.println("Attempting to send verification email via Brevo to: " + toEmail);
             
-            if (resendApiKey == null || resendApiKey.isBlank()) {
-                System.err.println("❌ Resend API Key is missing! Set RESEND_API_KEY environment variable.");
+            if (brevoApiKey == null || brevoApiKey.isBlank()) {
+                System.err.println("❌ Brevo API Key is missing! Set BREVO_API_KEY environment variable.");
                 return;
             }
 
             String verificationLink = frontendUrl + "/verify-email?token=" + verificationToken;
             
-            // Build modern HTML email body for a beautiful look in Gmail
+            // HTML body for a professional look in Gmail
             String emailHtml = String.format(
                 "<h3>COMSATS University - Email Verification</h3>" +
                 "<p>Dear %s,</p>" +
@@ -49,19 +49,24 @@ public class EmailService {
                 verificationLink
             );
 
-            // Construct JSON request body for Resend API
-            // Note: Resend Free plan allows sending from onboarding@resend.dev to your verified/account emails.
+            // Construct JSON request body for Brevo Transactional Email API (v3)
             String jsonPayload = String.format(
-                "{\"from\":\"onboarding@resend.dev\",\"to\":\"%s\",\"subject\":\"COMSATS University - Verify Your Email Address\",\"html\":\"%s\"}",
+                "{" +
+                "\"sender\":{\"name\":\"COMSATS CCMS\",\"email\":\"comsats.ccms@gmail.com\"}," +
+                "\"to\":[{\"email\":\"%s\",\"name\":\"%s\"}]," +
+                "\"subject\":\"COMSATS University - Verify Your Email Address\"," +
+                "\"htmlContent\":\"%s\"" +
+                "}",
                 toEmail,
-                emailHtml.replace("\"", "\\\"") // Escape quotes for valid JSON
+                fullName,
+                emailHtml.replace("\"", "\\\"").replace("\n", " ") // Escape quotes & strip newlines for JSON
             );
 
-            // Use Java's native HttpClient (built into Java 11+) over secure Port 443 (HTTP)
+            // Use Java's native HttpClient (over secure HTTPS Port 443)
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.resend.com/emails"))
-                    .header("Authorization", "Bearer " + resendApiKey)
+                    .uri(URI.create("https://api.brevo.com/v3/smtp/email"))
+                    .header("api-key", brevoApiKey)
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
                     .build();
@@ -69,9 +74,9 @@ public class EmailService {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
-                System.out.println("✅ Verification email sent successfully via Resend to: " + toEmail);
+                System.out.println("✅ Verification email sent successfully via Brevo to: " + toEmail);
             } else {
-                System.err.println("❌ Resend API returned error code " + response.statusCode() + ": " + response.body());
+                System.err.println("❌ Brevo API returned error code " + response.statusCode() + ": " + response.body());
             }
 
         } catch (Exception e) {
