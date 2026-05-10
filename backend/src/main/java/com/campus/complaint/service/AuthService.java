@@ -152,4 +152,23 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
+
+    @Transactional
+    public String tempActivate(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found for email: " + email));
+        user.setEmailVerified(true);
+        user.setVerificationToken(null);
+        user.setVerificationTokenExpiry(null);
+        userRepository.save(user);
+        return "User " + email + " successfully verified manually!";
+    }
+
+    @Transactional
+    public String tempDelete(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found for email: " + email));
+        userRepository.delete(user);
+        return "User " + email + " successfully deleted from database!";
+    }
 }

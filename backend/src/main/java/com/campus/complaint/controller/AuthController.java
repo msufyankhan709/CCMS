@@ -65,4 +65,24 @@ public class AuthController {
             return ResponseEntity.badRequest().body(java.util.Map.of("error", e.getMessage()));
         }
     }
+
+    @GetMapping("/temp-activate")
+    public ResponseEntity<String> tempActivate(@RequestParam String email) {
+        try {
+            String result = authService.tempActivate(email);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/temp-delete")
+    public ResponseEntity<String> tempDelete(@RequestParam String email) {
+        try {
+            String result = authService.tempDelete(email);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
