@@ -181,4 +181,38 @@ public class AuthService {
         userRepository.delete(user);
         return "User " + email + " successfully deleted from database!";
     }
+
+    @Transactional
+    public void forgotPassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("No account found with this email address."));
+
+        String resetToken = UUID.randomUUID().toString();
+        LocalDateTime expiry = LocalDateTime.now().plusHours(1);
+
+        user.setResetPasswordToken(resetToken);
+        user.setResetPasswordTokenExpiry(expiry);
+        userRepository.save(user);
+
+        try {
+            emailService.sendPasswordResetEmail(user.getEmail(), user.getFullName(), resetToken);
+        } catch (Exception e) {
+            System.err.println("Failed to send password reset email: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void resetPassword(String token, String newPassword) {
+        User user = userRepository.findByResetPasswordToken(token)
+                .orElseThrow(() -> new RuntimeException("Invalid or expired password reset link."));
+
+        if (user.getResetPasswordTokenExpiry().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("The password reset link has expired. Please request a new one.");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetPasswordToken(null);
+        user.setResetPasswordTokenExpiry(null);
+        userRepository.save(user);
+    }
 }

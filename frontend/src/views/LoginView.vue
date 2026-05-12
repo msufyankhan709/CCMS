@@ -48,9 +48,12 @@
                 </div>
 
                 <div class="mb-5">
-                  <label class="text-body-2 font-weight-bold mb-1 d-block">
-                    <v-icon size="16" class="mr-1">mdi-lock</v-icon>Password <span class="text-red">*</span>
-                  </label>
+                  <div class="d-flex justify-space-between align-center mb-1">
+                    <label class="text-body-2 font-weight-bold d-block">
+                      <v-icon size="16" class="mr-1">mdi-lock</v-icon>Password <span class="text-red">*</span>
+                    </label>
+                    <a class="text-caption font-weight-bold cursor-pointer" style="color: #4F46E5; text-decoration: none;" @click="$router.push('/forgot-password')">Forgot Password?</a>
+                  </div>
                   <v-text-field
                     v-model="formData.password"
                     placeholder="Enter your password"

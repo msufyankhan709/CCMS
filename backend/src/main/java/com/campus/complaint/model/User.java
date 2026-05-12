@@ -63,4 +63,9 @@ public class User {
     private String verificationToken;
 
     private LocalDateTime verificationTokenExpiry;
+
+    @Column(length = 500)
+    private String resetPasswordToken;
+
+    private LocalDateTime resetPasswordTokenExpiry;
 }

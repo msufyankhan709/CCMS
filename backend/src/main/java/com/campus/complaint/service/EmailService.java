@@ -83,4 +83,63 @@ public class EmailService {
             e.printStackTrace();
         }
     }
+
+    @Async
+    public void sendPasswordResetEmail(String toEmail, String fullName, String resetToken) {
+        try {
+            System.out.println("Attempting to send password reset email via EmailJS to: " + toEmail);
+
+            String resetLink = frontendUrl + "/reset-password?token=" + resetToken;
+            System.out.println("🔗 [DEVELOPMENT/TEST ONLY] Password reset link is: " + resetLink);
+
+            if (publicKey == null || publicKey.isBlank()) {
+                System.err.println("⚠️ EmailJS keys are missing on local machine! Bypassing email send. Copy the printed [TEST ONLY] link above to test on your localhost!");
+                return;
+            }
+
+            // Build JSON payload for EmailJS REST API
+            String jsonPayload = String.format(
+                "{" +
+                "\"service_id\":\"%s\"," +
+                "\"template_id\":\"%s\"," +
+                "\"user_id\":\"%s\"," +
+                "\"accessToken\":\"%s\"," +
+                "\"template_params\":{" +
+                    "\"to_email\":\"%s\"," +
+                    "\"to_name\":\"%s\"," +
+                    "\"verification_link\":\"%s\"," +
+                    "\"reset_link\":\"%s\"" +
+                "}" +
+                "}",
+                serviceId,
+                templateId,
+                publicKey,
+                privateKey,
+                toEmail,
+                fullName,
+                resetLink,
+                resetLink
+            );
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://api.emailjs.com/api/v1.0/email/send"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                System.out.println("✅ Password reset email sent successfully via EmailJS to: " + toEmail);
+            } else {
+                System.err.println("❌ EmailJS API returned error code " + response.statusCode() + ": " + response.body());
+            }
+
+        } catch (Exception e) {
+            System.err.println("❌ Failed to send password reset email to: " + toEmail);
+            System.err.println("Error details: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

@@ -85,6 +85,34 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    async function forgotPassword(email) {
+        try {
+            loading.value = true
+            error.value = null
+            const response = await api.post('/auth/forgot-password', { email })
+            return response.data
+        } catch (err) {
+            error.value = err.response?.data?.error || err.response?.data || 'Failed to request password reset'
+            throw err
+        } finally {
+            loading.value = false
+        }
+    }
+
+    async function resetPassword(token, newPassword) {
+        try {
+            loading.value = true
+            error.value = null
+            const response = await api.post('/auth/reset-password', { token, newPassword })
+            return response.data
+        } catch (err) {
+            error.value = err.response?.data?.error || err.response?.data || 'Failed to reset password'
+            throw err
+        } finally {
+            loading.value = false
+        }
+    }
+
     return {
         user,
         token,
@@ -95,6 +123,8 @@ export const useAuthStore = defineStore('auth', () => {
         login,
         signup,
         logout,
-        changePassword
+        changePassword,
+        forgotPassword,
+        resetPassword
     }
 })
