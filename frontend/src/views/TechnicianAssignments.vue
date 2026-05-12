@@ -253,7 +253,7 @@
                   >
                     <!-- Avatar for incoming comments -->
                     <v-avatar v-if="comment.userName !== authStore.user?.fullName" size="32" color="indigo-darken-1" class="mr-2 mt-1">
-                      <span class="text-caption font-weight-bold text-white">{{ comment.userName.charAt(0).toUpperCase() }}</span>
+                      <span class="text-caption font-weight-bold text-white">{{ (comment.userName || 'User').charAt(0).toUpperCase() }}</span>
                     </v-avatar>
 
                     <!-- Bubble -->
@@ -269,7 +269,7 @@
                         class="text-caption font-weight-bold mb-1"
                         :class="comment.userName === authStore.user?.fullName ? 'text-indigo-lighten-5' : 'text-indigo'"
                       >
-                        {{ comment.userName }}
+                        {{ comment.userName || 'Anonymous User' }}
                       </div>
                       <div class="text-body-2 leading-relaxed" style="word-break: break-word;" :style="comment.userName === authStore.user?.fullName ? 'color: #ffffff;' : 'color: #1e293b;'">{{ comment.content }}</div>
                       <div 
@@ -283,7 +283,7 @@
 
                     <!-- Avatar for outgoing comments -->
                     <v-avatar v-if="comment.userName === authStore.user?.fullName" size="32" color="blue-darken-3" class="ml-2 mt-1">
-                      <span class="text-caption font-weight-bold text-white">{{ comment.userName.charAt(0).toUpperCase() }}</span>
+                      <span class="text-caption font-weight-bold text-white">{{ (comment.userName || 'User').charAt(0).toUpperCase() }}</span>
                     </v-avatar>
                   </div>
                 </div>
